@@ -6,16 +6,34 @@ import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
 
 interface IRequest {
     id: string;
+    name: string;
+    price: number;
+    quantity: number;
 }
 
-export class ShowProductService {
-    public async execute({ id }: IRequest): Promise<Product | undefined> {
+export class UpdateProductService {
+    public async execute({
+        id,
+        name,
+        price,
+        quantity,
+    }: IRequest): Promise<Product | undefined> {
         const productsRepository = getCustomRepository(ProductRepository);
         const product = await productsRepository.findOne(id);
 
         if (!product) {
             throw new AppError('Produto não encontrado!');
         }
+
+        const productExists = await productsRepository.findByName(name);
+
+        if (productExists) {
+            throw new AppError('Já existe um produto com este nome');
+        }
+
+        product.name = name;
+        product.price = price;
+        product.quantity = quantity;
 
         return product;
     }
