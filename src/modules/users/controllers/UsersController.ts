@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
+import User from '../typeorm/entities/User';
 
 export default class UsersController {
     public async index(
@@ -10,7 +11,7 @@ export default class UsersController {
         const listUser = new ListUserService();
         const users = await listUser.execute();
 
-        return response.json(users);
+        return response.json({ amount: users.length, users });
     }
 
     public async create(

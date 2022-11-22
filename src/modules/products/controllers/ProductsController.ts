@@ -14,7 +14,7 @@ export default class ProductsController {
         const listProducts = new ListProductService();
         const products = await listProducts.execute();
 
-        return response.json(products);
+        return response.json({ amount: products.length, products });
     }
 
     public async show(request: Request, response: Response): Promise<Response> {
