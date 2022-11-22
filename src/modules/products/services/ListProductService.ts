@@ -1,5 +1,3 @@
-import Product from '../typeorm/entities/Product';
-
 import { getCustomRepository } from 'typeorm';
 import {
     ProductDTO,
