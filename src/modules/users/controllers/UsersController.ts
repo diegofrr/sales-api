@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
-import User from '../typeorm/entities/User';
 
 export default class UsersController {
     public async index(

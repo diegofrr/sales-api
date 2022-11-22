@@ -23,7 +23,7 @@ export default class CreateSessionsService {
             throw new AppError('Incorrect email/password/ combination.', 401);
         }
 
-        const passwordComfirmed = compare(password, user.password);
+        const passwordComfirmed = await compare(password, user.password);
 
         if (!passwordComfirmed) {
             throw new AppError('Incorrect email/password/ combination.', 401);
