@@ -1,3 +1,4 @@
+import { compare } from 'bcryptjs';
 import { EntityRepository, Repository } from 'typeorm';
 import User from '../entities/User';
 
@@ -42,5 +43,12 @@ export default class UserRepository extends Repository<User> {
             email: user.email,
             avatar: user.avatar,
         };
+    }
+
+    public async checkPassword(
+        password: string,
+        hashedPassword: string,
+    ): Promise<boolean> {
+        return await compare(password, hashedPassword);
     }
 }
