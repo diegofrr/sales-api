@@ -1,6 +1,5 @@
 import { hash } from 'bcryptjs';
 import {
-    AfterInsert,
     AfterLoad,
     BeforeInsert,
     BeforeUpdate,
@@ -44,7 +43,7 @@ class User {
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword(): Promise<void> {
-        this.password = await hash(this.password, 10);
+        this.password = await hash(this.password, 8);
     }
 }
 

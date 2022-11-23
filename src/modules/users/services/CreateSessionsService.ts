@@ -3,15 +3,10 @@ import User from '../typeorm/entities/User';
 
 import { getCustomRepository } from 'typeorm';
 import UserRepository from '../typeorm/repositories/UsersRepository';
-import { compare } from 'bcryptjs';
 
 interface IRequest {
     email: string;
     password: string;
-}
-
-interface IResponse {
-    user: User;
 }
 
 export default class CreateSessionsService {
