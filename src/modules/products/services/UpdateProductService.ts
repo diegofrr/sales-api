@@ -11,6 +11,29 @@ interface IRequest {
     quantity: number;
 }
 
+interface NotChangedProductProps {
+    product: Product;
+    name: string;
+    price: number;
+    quantity: number;
+}
+
+function notChangedProduct({
+    product,
+    name,
+    price,
+    quantity,
+}: NotChangedProductProps): boolean {
+    if (
+        product.name == name &&
+        product.price == price &&
+        product.quantity == quantity
+    ) {
+        return true;
+    }
+    return false;
+}
+
 class UpdateProductService {
     public async execute({
         id,
@@ -25,9 +48,13 @@ class UpdateProductService {
             throw new AppError('Produto não encontrado!');
         }
 
+        if (notChangedProduct({ product, name, price, quantity })) {
+            throw new AppError('Nada alterado.');
+        }
+
         const productExists = await productsRepository.findByName(name);
 
-        if (productExists && productExists.name === name) {
+        if (productExists && productExists.id !== id) {
             throw new AppError('Já existe um produto com este nome');
         }
 
