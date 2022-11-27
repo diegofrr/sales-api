@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
 import UserRepository from '../typeorm/repositories/UsersRepository';
@@ -23,7 +23,7 @@ export default class UsersController {
 
         const createUser = new CreateUserService();
         const user = await createUser.execute({ name, email, password });
-        const userDTO = usersRepository.toDTO(user);
+        const userDTO = await usersRepository.toDTO(user);
 
         return response.json(userDTO);
     }

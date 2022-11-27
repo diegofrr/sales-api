@@ -37,7 +37,7 @@ export default class UserRepository extends Repository<User> {
         return user;
     }
 
-    public toDTO(user: User): UserDTO {
+    public async toDTO(user: User): Promise<UserDTO> {
         return {
             name: user.name,
             email: user.email,
