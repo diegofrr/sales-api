@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import Product from '../entities/Product';
 
 export interface ProductDTO {
+    id: string;
     name: string;
     price: number;
     quantity: number;
@@ -23,6 +24,7 @@ export class ProductRepository extends Repository<Product> {
 
     public toDTO(product: Product): ProductDTO {
         return {
+            id: product.id,
             name: product.name,
             price: product.price,
             quantity: product.quantity,
