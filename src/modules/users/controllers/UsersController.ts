@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
 import UserRepository from '../typeorm/repositories/UsersRepository';
@@ -10,8 +10,6 @@ export default class UsersController {
     ): Promise<Response> {
         const listUser = new ListUserService();
         const users = await listUser.execute();
-
-        console.log(request.user.id);
 
         return response.json({ amount: users.length, users });
     }
