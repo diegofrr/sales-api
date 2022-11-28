@@ -33,13 +33,6 @@ class User {
     @UpdateDateColumn()
     updated_at: Date;
 
-    private tempPassword: string;
-
-    @AfterLoad()
-    private loadTempPassword(): void {
-        this.tempPassword = this.password;
-    }
-
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword(): Promise<void> {

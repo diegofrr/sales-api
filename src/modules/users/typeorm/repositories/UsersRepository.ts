@@ -41,7 +41,7 @@ export default class UserRepository extends Repository<User> {
         return {
             name: user.name,
             email: user.email,
-            avatar: user.avatar,
+            avatar: user.avatar || 'default_avatar_url',
         };
     }
 

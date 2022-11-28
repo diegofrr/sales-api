@@ -10,8 +10,8 @@ export default class ListUserService {
         const users = await usersRepository.find();
         const usersList = [] as UserDTO[];
 
-        users.forEach(u => {
-            usersList.push(usersRepository.toDTO(u));
+        users.forEach(async u => {
+            usersList.push(await usersRepository.toDTO(u));
         });
 
         return usersList;

@@ -12,7 +12,7 @@ export default class SessionsController {
         const usersRepository = new UserRepository();
 
         const user = await createSession.execute({ email, password });
-        const userDTO = usersRepository.toDTO(user);
+        const userDTO = await usersRepository.toDTO(user);
 
         return response.json(userDTO);
     }
