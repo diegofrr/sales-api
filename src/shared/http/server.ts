@@ -8,12 +8,15 @@ import routes from './routes';
 import AppError from '@shared/errors/AppError';
 
 import { errors } from 'celebrate';
+import uploadConfig from '@config/upload';
 
 const server = express();
 
 server.use(cors());
 server.use(express.json());
+server.use('/files', express.static(uploadConfig.directory));
 server.use(routes);
+
 server.use(errors());
 
 server.use(
