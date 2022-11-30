@@ -36,5 +36,6 @@ export default class ResetPasswordService {
         }
 
         user.password = password;
+        await usersRepository.save(user);
     }
 }
