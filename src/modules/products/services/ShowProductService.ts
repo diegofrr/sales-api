@@ -3,6 +3,7 @@ import Product from '../typeorm/entities/Product';
 
 import { getCustomRepository } from 'typeorm';
 import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
+import toDTO from '../utils/toDTO';
 
 interface IRequest {
     id: string;
@@ -17,7 +18,9 @@ class ShowProductService {
             throw new AppError('Produto não encontrado!');
         }
 
-        return product;
+        const productDTO = toDTO(product);
+
+        return productDTO;
     }
 }
 

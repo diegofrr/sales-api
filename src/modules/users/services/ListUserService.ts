@@ -1,7 +1,7 @@
+import UserRepository from '../typeorm/repositories/UsersRepository';
+
 import { getCustomRepository } from 'typeorm';
-import UserRepository, {
-    UserDTO,
-} from '../typeorm/repositories/UsersRepository';
+import { toDTO, UserDTO } from '../utils/toDTO';
 
 export default class ListUserService {
     public async execute(): Promise<UserDTO[]> {
@@ -10,8 +10,8 @@ export default class ListUserService {
         const users = await usersRepository.find();
         const usersList = [] as UserDTO[];
 
-        users.forEach(async u => {
-            usersList.push(await usersRepository.toDTO(u));
+        users.forEach(u => {
+            usersList.push(toDTO(u));
         });
 
         return usersList;

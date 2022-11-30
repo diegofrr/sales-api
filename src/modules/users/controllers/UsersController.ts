@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
-import UserRepository from '../typeorm/repositories/UsersRepository';
+import { toDTO } from '../utils/toDTO';
 
 export default class UsersController {
     public async index(
@@ -19,11 +19,10 @@ export default class UsersController {
         response: Response,
     ): Promise<Response> {
         const { name, email, password } = request.body;
-        const usersRepository = new UserRepository();
 
         const createUser = new CreateUserService();
         const user = await createUser.execute({ name, email, password });
-        const userDTO = await usersRepository.toDTO(user);
+        const userDTO = toDTO(user);
 
         return response.json(userDTO);
     }

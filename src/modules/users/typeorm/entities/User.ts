@@ -1,6 +1,5 @@
 import { hash } from 'bcryptjs';
 import {
-    AfterLoad,
     BeforeInsert,
     BeforeUpdate,
     Column,

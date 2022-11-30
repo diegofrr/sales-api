@@ -1,8 +1,6 @@
 import { getCustomRepository } from 'typeorm';
-import {
-    ProductDTO,
-    ProductRepository,
-} from '../typeorm/repositories/ProductsRepository';
+import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
+import toDTO, { ProductDTO } from '../utils/toDTO';
 
 class ListProductService {
     public async execute(): Promise<ProductDTO[]> {
@@ -12,7 +10,7 @@ class ListProductService {
         const productsList = [] as ProductDTO[];
 
         products.forEach(p => {
-            productsList.push(productsRepository.toDTO(p));
+            productsList.push(toDTO(p));
         });
 
         return productsList;
