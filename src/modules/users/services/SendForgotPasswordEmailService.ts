@@ -4,6 +4,7 @@ import { getCustomRepository } from 'typeorm';
 import UserRepository from '../typeorm/repositories/UsersRepository';
 import UserTokensRepository from '../typeorm/repositories/UserTokensRepository';
 import EtherealMail from '@config/mail/EtherealMail';
+import path from 'path';
 
 interface IRequest {
     email: string;
@@ -22,6 +23,13 @@ export default class SendForgotPasswordEmailService {
 
         const token = await userTokensRepository.generate(user.id);
 
+        const forgotPasswordTemplate = path.resolve(
+            __dirname,
+            '..',
+            'views',
+            'forgot_password.hbs',
+        );
+
         await EtherealMail.sendMail({
             to: {
                 name: user.name,
@@ -29,10 +37,10 @@ export default class SendForgotPasswordEmailService {
             },
             subject: '[SALES API] Recuperação de senha',
             templateData: {
-                template: `Olá ${user.name}: Seu token: ${token.token}`,
+                file: forgotPasswordTemplate,
                 variables: {
                     name: user.name,
-                    token: token.token,
+                    link: `http://localhost:3333/reset_password?token=${token.token}`,
                 },
             },
         });
