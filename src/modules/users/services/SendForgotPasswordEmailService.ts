@@ -23,8 +23,18 @@ export default class SendForgotPasswordEmailService {
         const token = await userTokensRepository.generate(user.id);
 
         await EtherealMail.sendMail({
-            to: email,
-            body: `Token de redefinição: ${token?.token}`,
+            to: {
+                name: user.name,
+                email: user.email,
+            },
+            subject: '[SALES API] Recuperação de senha',
+            templateData: {
+                template: `Olá ${user.name}: Seu token: ${token.token}`,
+                variables: {
+                    name: user.name,
+                    token: token.token,
+                },
+            },
         });
     }
 }
