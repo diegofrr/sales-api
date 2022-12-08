@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 
-import AppError from '@shared/errors/AppError';
 import ListCustomerService from '../services/ListCustomerService';
 import ShowCustomerService from '../services/ShowCustomerService';
 import CreateCustomerService from '../services/CreateCustomerService';

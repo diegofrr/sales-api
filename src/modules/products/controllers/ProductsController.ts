@@ -6,7 +6,6 @@ import ListProductService from '../services/ListProductService';
 import UpdateProductService from '../services/UpdateProductService';
 import DeleteProductService from '../services/DeleteProductService';
 import toDTO, { ProductDTO } from '../utils/toDTO';
-import AppError from '@shared/errors/AppError';
 
 export default class ProductsController {
     public async index(
