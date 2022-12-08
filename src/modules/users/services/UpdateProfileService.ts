@@ -13,23 +13,6 @@ interface IRequest {
     new_password?: string;
 }
 
-interface NotChangedProfileProps {
-    user: User;
-    name: string;
-    email: string;
-}
-
-function notChangedProfile({
-    user,
-    name,
-    email,
-}: NotChangedProfileProps): boolean {
-    if (user.name == name && user.email == email) {
-        return true;
-    }
-    return false;
-}
-
 export default class UpdateProfileService {
     public async execute({
         user_id,
@@ -44,10 +27,6 @@ export default class UpdateProfileService {
 
         if (!user) {
             throw new AppError('User not found.');
-        }
-
-        if (notChangedProfile({ user, name, email })) {
-            throw new AppError('Nada alterado.');
         }
 
         const userUpdateEmail = await usersRepository.findByEmail(email);
