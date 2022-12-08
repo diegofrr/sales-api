@@ -31,10 +31,6 @@ export default class ProductsController {
         const showProduct = new ShowProductService();
         const product = await showProduct.execute({ id });
 
-        if (!product) {
-            throw new AppError('Produto não encontrado.');
-        }
-
         return response.json(toDTO(product));
     }
 
@@ -53,7 +49,7 @@ export default class ProductsController {
     public async update(
         request: Request,
         response: Response,
-    ): Promise<Response | undefined> {
+    ): Promise<Response> {
         const { name, price, quantity } = request.body;
         const { id } = request.params;
 
