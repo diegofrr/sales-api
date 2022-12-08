@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import UpadteAvatarService from '../services/UpdateUserAvatarService';
+import { toDTO } from '../utils/toDTO';
 
 export default class UserAvatarController {
     public async update(
@@ -7,11 +8,11 @@ export default class UserAvatarController {
         response: Response,
     ): Promise<Response> {
         const updateAvatar = new UpadteAvatarService();
-        const user = updateAvatar.execute({
+        const user = await updateAvatar.execute({
             user_id: request.user.id,
             avatarFilename: String(request.file?.filename),
         });
 
-        return response.json(user);
+        return response.json(toDTO(user));
     }
 }

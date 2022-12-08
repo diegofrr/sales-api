@@ -13,8 +13,7 @@ export default class SessionsController {
 
         const data = await createSession.execute({ email, password });
         const { user, token } = data;
-        const userDTO = toDTO(user);
-        const responseData = { ...userDTO, token };
+        const responseData = { ...toDTO(user), token };
 
         return response.json(responseData);
     }

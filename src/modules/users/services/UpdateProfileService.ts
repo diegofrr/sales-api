@@ -1,7 +1,6 @@
 import UserRepository from '../typeorm/repositories/UsersRepository';
 
 import { getCustomRepository } from 'typeorm';
-import { toDTO, UserDTO } from '../utils/toDTO';
 import AppError from '@shared/errors/AppError';
 import User from '../typeorm/entities/User';
 import { compare } from 'bcryptjs';
@@ -38,7 +37,7 @@ export default class UpdateProfileService {
         email,
         password,
         new_password,
-    }: IRequest): Promise<UserDTO> {
+    }: IRequest): Promise<User> {
         const usersRepository = getCustomRepository(UserRepository);
 
         const user = await usersRepository.findById(user_id);
@@ -76,8 +75,6 @@ export default class UpdateProfileService {
 
         await usersRepository.save(user);
 
-        const userDTO = toDTO(user);
-
-        return userDTO;
+        return user;
     }
 }

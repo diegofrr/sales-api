@@ -5,6 +5,8 @@ import ShowProductService from '../services/ShowProductService';
 import ListProductService from '../services/ListProductService';
 import UpdateProductService from '../services/UpdateProductService';
 import DeleteProductService from '../services/DeleteProductService';
+import toDTO, { ProductDTO } from '../utils/toDTO';
+import AppError from '@shared/errors/AppError';
 
 export default class ProductsController {
     public async index(
@@ -14,7 +16,13 @@ export default class ProductsController {
         const listProducts = new ListProductService();
         const products = await listProducts.execute();
 
-        return response.json({ amount: products.length, products });
+        const productsList = [] as ProductDTO[];
+
+        products.forEach(p => {
+            productsList.push(toDTO(p));
+        });
+
+        return response.json({ amount: productsList.length, productsList });
     }
 
     public async show(request: Request, response: Response): Promise<Response> {
@@ -23,7 +31,11 @@ export default class ProductsController {
         const showProduct = new ShowProductService();
         const product = await showProduct.execute({ id });
 
-        return response.json(product);
+        if (!product) {
+            throw new AppError('Produto não encontrado.');
+        }
+
+        return response.json(toDTO(product));
     }
 
     public async create(
@@ -35,7 +47,7 @@ export default class ProductsController {
         const createProduct = new CreateProductService();
         const product = await createProduct.execute({ name, price, quantity });
 
-        return response.json(product);
+        return response.json(toDTO(product));
     }
 
     public async update(
@@ -53,7 +65,7 @@ export default class ProductsController {
             quantity,
         });
 
-        return response.json(product);
+        return response.json(toDTO(product));
     }
 
     public async delete(

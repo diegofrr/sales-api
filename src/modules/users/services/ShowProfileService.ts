@@ -1,15 +1,15 @@
 import UserRepository from '../typeorm/repositories/UsersRepository';
 
 import { getCustomRepository } from 'typeorm';
-import { toDTO, UserDTO } from '../utils/toDTO';
 import AppError from '@shared/errors/AppError';
+import User from '../typeorm/entities/User';
 
 interface IRequest {
     user_id: string;
 }
 
 export default class ShowProfileService {
-    public async execute({ user_id }: IRequest): Promise<UserDTO> {
+    public async execute({ user_id }: IRequest): Promise<User> {
         const usersRepository = getCustomRepository(UserRepository);
 
         const user = await usersRepository.findById(user_id);
@@ -18,8 +18,6 @@ export default class ShowProfileService {
             throw new AppError('User not found.');
         }
 
-        const userDTO = toDTO(user);
-
-        return userDTO;
+        return user;
     }
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
-import { toDTO } from '../utils/toDTO';
+import { toDTO, UserDTO } from '../utils/toDTO';
 
 export default class UsersController {
     public async index(
@@ -11,7 +11,13 @@ export default class UsersController {
         const listUser = new ListUserService();
         const users = await listUser.execute();
 
-        return response.json({ amount: users.length, users });
+        const usersList = [] as UserDTO[];
+
+        users.forEach(u => {
+            usersList.push(toDTO(u));
+        });
+
+        return response.json({ amount: usersList.length, usersList });
     }
 
     public async create(
@@ -22,8 +28,7 @@ export default class UsersController {
 
         const createUser = new CreateUserService();
         const user = await createUser.execute({ name, email, password });
-        const userDTO = toDTO(user);
 
-        return response.json(userDTO);
+        return response.json(toDTO(user));
     }
 }
